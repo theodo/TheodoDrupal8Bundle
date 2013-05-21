@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="theodo_drupal.drupal.class">Theodo\Bundle\DrupalBundle\Drupal\Drupal</parameter>
+        <parameter key="theodo_drupal.router_listener.class">Theodo\Bundle\DrupalBundle\EventListener\DrupalRouterListener</parameter>
+    </parameters>
+
+    <services>
+        <service id="theodo_drupal.drupal" class="%theodo_drupal.drupal.class%">
+            <argument type="string">%theodo_drupal.drupal_path%</argument>
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="theodo_drupal.router_listener" class="%theodo_drupal.router_listener.class%">
+            <tag name="kernel.event_subscriber" />
+            <tag name="monolog.logger" channel="event" />
+            <argument type="service" id="theodo_drupal.drupal" />
+            <argument type="service" id="router_listener" />
+            <argument type="service" id="logger" on-invalid="null" />
+        </service>
+    </services>
+</container>

@@ -1,0 +1,21 @@
+{
+    "name": "theodo/drupal-bundle",
+    "description": "Bridging Drupal 8 and Symfony2",
+    "keywords": ["components", "drupal"],
+    "licence": "MIT",
+    "authors": [
+        {
+            "name": "Theodo",
+            "homepage": "http://www.theodo.fr"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.10",
+        "friendsofsymfony/user-bundle": ">=1.2, <2.0"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": { "Theodo\\Bundle\\DrupalBundle": "" }
+    },
+    "target-dir": "Theodo/Bundle/DrupalBundle"
+}
