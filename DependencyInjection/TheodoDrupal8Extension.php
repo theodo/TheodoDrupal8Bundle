@@ -1,6 +1,6 @@
 <?php
 
-namespace Theodo\Bundle\DrupalBundle\DependencyInjection;
+namespace Theodo\Bundle\Drupal8Bundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

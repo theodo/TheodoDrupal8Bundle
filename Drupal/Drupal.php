@@ -1,6 +1,6 @@
 <?php
 
-namespace Theodo\Bundle\DrupalBundle\Drupal;
+namespace Theodo\Bundle\Drupal8Bundle\Drupal;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;

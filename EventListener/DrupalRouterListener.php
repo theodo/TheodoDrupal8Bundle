@@ -1,6 +1,6 @@
 <?php
 
-namespace Theodo\Bundle\DrupalBundle\EventListener;
+namespace Theodo\Bundle\Drupal8Bundle\EventListener;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Theodo\Bundle\DrupalBundle\Drupal\DrupalInterface;
+use Theodo\Bundle\Drupal8Bundle\Drupal\DrupalInterface;
 
 /**
  * Class DrupalRouterListener
@@ -21,7 +21,7 @@ use Theodo\Bundle\DrupalBundle\Drupal\DrupalInterface;
 class DrupalRouterListener implements EventSubscriberInterface
 {
     /**
-     * @var \Theodo\Bundle\DrupalBundle\Drupal\DrupalInterface
+     * @var \Theodo\Bundle\Drupal8Bundle\Drupal\DrupalInterface
      */
     protected $drupal;
 

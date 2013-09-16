@@ -1,6 +1,6 @@
 <?php
 
-namespace Theodo\Bundle\DrupalBundle\Drupal;
+namespace Theodo\Bundle\Drupal8Bundle\Drupal;
 
 /**
  * Drupal interface connects a Drupal8 app with Symfony2 one.

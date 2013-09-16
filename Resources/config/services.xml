@@ -5,8 +5,8 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="theodo_drupal.drupal.class">Theodo\Bundle\DrupalBundle\Drupal\Drupal</parameter>
-        <parameter key="theodo_drupal.router_listener.class">Theodo\Bundle\DrupalBundle\EventListener\DrupalRouterListener</parameter>
+        <parameter key="theodo_drupal.drupal.class">Theodo\Bundle\Drupal8Bundle\Drupal\Drupal</parameter>
+        <parameter key="theodo_drupal.router_listener.class">Theodo\Bundle\Drupal8Bundle\EventListener\DrupalRouterListener</parameter>
     </parameters>
 
     <services>

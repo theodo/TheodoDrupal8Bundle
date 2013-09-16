@@ -1,6 +1,6 @@
 <?php
 
-namespace Theodo\Bundle\DrupalBundle\DependencyInjection;
+namespace Theodo\Bundle\Drupal8Bundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;

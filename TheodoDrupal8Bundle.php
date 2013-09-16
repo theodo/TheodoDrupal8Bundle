@@ -1,12 +1,12 @@
 <?php
 
-namespace Theodo\Bundle\DrupalBundle;
+namespace Theodo\Bundle\Drupal8Bundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Theodo\Bundle\DrupalBundle\DependencyInjection\Compiler\RouterListenerPass;
+use Theodo\Bundle\Drupal8Bundle\DependencyInjection\Compiler\RouterListenerPass;
 
-class TheodoDrupalBundle extends Bundle
+class TheodoDrupal8Bundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {

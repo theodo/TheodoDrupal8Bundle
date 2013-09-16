@@ -1,4 +1,4 @@
-Theodo DrupalBundle
+Theodo Drupal8Bundle
 ===================
 
 This bundle allows to import a Drupal8 application into a Symfony2 standard edition.

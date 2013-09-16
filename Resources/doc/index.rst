@@ -1,7 +1,7 @@
-TheodoDrupalBundle
+TheodoDrupal8Bundle
 ==================
 
-This ``TheodoDrupalBundle`` aims to build a bridge between Symfony2 and
+This ``TheodoDrupal8Bundle`` aims to build a bridge between Symfony2 and
 Drupal 8, the new version of Drupal. It has been developed and widely
 inspired from the ``EkinoDrupalBundle`` (http://github.com/ekino/EkinoDrupalBundle),
 another open-source project created by Thomas Rabaix to enable the
@@ -41,9 +41,9 @@ contained in the ``web/`` directory. That's why it would be interesting to
 improve this file inclusion; for instance, maybe there is a way to get these
 files directly into a bundle via Composer.
 
-Step 3: Include TheodoDrupalBundle
+Step 3: Include TheodoDrupal8Bundle
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In your composer file, you'll need to require the ``TheodoDrupalBundle``, as well
+In your composer file, you'll need to require the ``TheodoDrupal8Bundle``, as well
 as ``FOSUserBundle`` which is needed by the first bundle to work. That's why
 you have to add the following lines to ``composer.json``::
 
@@ -63,7 +63,7 @@ You also may have to add declarations of these bundles in your
     {
         $bundles = array(
             # other bundles...
-            new Theodo\Bundle\DrupalBundle\TheodoDrupalBundle(),
+            new Theodo\Bundle\Drupal8Bundle\TheodoDrupal8Bundle(),
         );
 
         return $bundles;
