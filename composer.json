@@ -11,7 +11,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.10"
+        "php": ">=5.3.10",
+        "drupal/drupal": "8.*@dev"
     },
     "minimum-stability": "dev",
     "autoload": {
