@@ -5,20 +5,20 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="theodo_drupal.drupal.class">Theodo\Bundle\Drupal8Bundle\Drupal\Drupal</parameter>
-        <parameter key="theodo_drupal.router_listener.class">Theodo\Bundle\Drupal8Bundle\EventListener\DrupalRouterListener</parameter>
+        <parameter key="theodo_drupal8.drupal.class">Theodo\Bundle\Drupal8Bundle\Drupal\Drupal</parameter>
+        <parameter key="theodo_drupal8.router_listener.class">Theodo\Bundle\Drupal8Bundle\EventListener\DrupalRouterListener</parameter>
     </parameters>
 
     <services>
-        <service id="theodo_drupal.drupal" class="%theodo_drupal.drupal.class%">
-            <argument type="string">%theodo_drupal.drupal_path%</argument>
+        <service id="theodo_drupal8.drupal" class="%theodo_drupal8.drupal.class%">
+            <argument type="string">%theodo_drupal8.drupal_dir%</argument>
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="theodo_drupal.router_listener" class="%theodo_drupal.router_listener.class%">
+        <service id="theodo_drupal8.router_listener" class="%theodo_drupal8.router_listener.class%">
             <tag name="kernel.event_subscriber" />
             <tag name="monolog.logger" channel="event" />
-            <argument type="service" id="theodo_drupal.drupal" />
+            <argument type="service" id="theodo_drupal8.drupal" />
             <argument type="service" id="router_listener" />
             <argument type="service" id="logger" on-invalid="null" />
         </service>

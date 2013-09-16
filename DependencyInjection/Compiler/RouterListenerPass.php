@@ -21,13 +21,13 @@ class RouterListenerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        if (true === $container->hasDefinition('theodo_drupal.router_listener')) {
+        if (true === $container->hasDefinition('theodo_drupal8.router_listener')) {
             $routerListener = $container->getDefinition('router_listener');
 
-            $definition = $container->getDefinition('theodo_drupal.router_listener');
+            $definition = $container->getDefinition('theodo_drupal8.router_listener');
             $definition->replaceArgument(1, $routerListener);
 
-            $container->setAlias('router_listener', 'theodo_drupal.router_listener');
+            $container->setAlias('router_listener', 'theodo_drupal8.router_listener');
         }
     }
 

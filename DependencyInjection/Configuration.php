@@ -20,11 +20,12 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('theodo_drupal', 'array');
+        $rootNode = $treeBuilder->root('theodo_drupal8', 'array');
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('root')->isRequired()
+                ->scalarNode('drupal_dir')
+                ->defaultValue('%kernel.root_dir%/../vendor/drupal/drupal')
                 ->info('The root directory of your drupal application')->end()
             ->end();
 
