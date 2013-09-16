@@ -34,8 +34,7 @@ In your composer file, you'll need to require the ``TheodoDrupal8Bundle``. For t
         "theodo/drupal8-bundle": "dev-master"
 	}
 
-Then, all you have to do is to run ``composer update`` in your command shell to
-add these bundles to your project.
+Then run ``composer update`` in your command shell to add all the necessary bundles to your project.
 
 You will also need to add the declaration in your
 ``AppKernel.php`` file, like this::
@@ -49,3 +48,14 @@ You will also need to add the declaration in your
 
         return $bundles;
     }
+
+Step 3: Configure Symfony2 to work
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check http://symfony.com/doc/current/book/installation.html for the last steps of Symfony2's installation.
+
+For Ubuntu, you will need to type the following commands to make the cache and logs directories writable:
+
+	APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
+	sudo setfacl -R -m u:$APACHEUSER:rwX -m u:`whoami`:rwX app/cache app/logs
+	sudo setfacl -dR -m u:$APACHEUSER:rwX -m u:`whoami`:rwX app/cache app/logs

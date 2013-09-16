@@ -40,11 +40,6 @@ class Drupal implements DrupalInterface
     protected $container;
 
     /**
-     * @var String
-     */
-    protected $environment;
-
-    /**
      * {@inheritdoc}
      */
     protected $response;
@@ -62,13 +57,11 @@ class Drupal implements DrupalInterface
     /**
      * Initialize the Drupal core
      */
-    public function initialize($environment)
+    public function initialize()
     {
         if ($this->initialized) {
             return;
         }
-
-        $this->environment = $environment;
 
         $this->initialized = true;
         register_shutdown_function(array($this, 'shutdown'));
@@ -152,13 +145,9 @@ class Drupal implements DrupalInterface
         // autoloader with required namespaces registered.
         drupal_bootstrap(DRUPAL_BOOTSTRAP_CONFIGURATION);
 
-        // Exit if we should be in a test environment but aren't.
-        if ($this->environment !== 'test' && !drupal_valid_test_ua()) {
-            throw new \RuntimeException(sprintf('The environment should be test, %env% given', $this->environment));
-        }
-
+        die('caca');
         // @todo Figure out how best to handle the Kernel constructor parameters.
-        $kernel = new DrupalKernel('prod', false, drupal_classloader(), $this->environment !== 'test');
+        $kernel = new DrupalKernel('prod', drupal_classloader());
 
         // @todo Remove this once everything in the bootstrap has been
         //   converted to services in the DIC.

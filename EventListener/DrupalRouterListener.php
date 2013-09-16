@@ -63,7 +63,7 @@ class DrupalRouterListener implements EventSubscriberInterface
                 $this->logger->info('Drupal will handle the request.');
             }
 
-            $this->drupal->initialize($event->getKernel()->getEnvironment());
+            $this->drupal->initialize();
 
             if ($this->drupal->hasResponse()) {
                 $response = $this->drupal->getResponse();

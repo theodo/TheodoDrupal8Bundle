@@ -13,7 +13,7 @@ use Symfony\Component\Config\Definition\Processor;
  * @author Kenny Durand <kennyd@theodo.fr>
  * @author Thierry Marianne <thierrym@theodo.fr>
  */
-class TheodoDrupalExtension extends Extension
+class TheodoDrupal8Extension extends Extension
 {
     /**
      * @param array                                                   $config

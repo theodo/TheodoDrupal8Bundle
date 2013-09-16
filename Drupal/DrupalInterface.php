@@ -15,11 +15,10 @@ interface DrupalInterface
      * Initialize the Drupal instance
      *
      * @abstract
-     * @param $environment The environment in which Drupal is initialized
      *
      * @return mixed
      */
-    public function initialize($environment);
+    public function initialize();
 
     /**
      * The shutdown method only catch exit instruction from the Drupal code to rebuild the correct response
