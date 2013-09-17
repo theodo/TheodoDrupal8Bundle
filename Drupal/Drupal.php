@@ -145,7 +145,7 @@ class Drupal implements DrupalInterface
         // autoloader with required namespaces registered.
         drupal_bootstrap(DRUPAL_BOOTSTRAP_CONFIGURATION);
 
-        die('caca');
+
         // @todo Figure out how best to handle the Kernel constructor parameters.
         $kernel = new DrupalKernel('prod', drupal_classloader());
 

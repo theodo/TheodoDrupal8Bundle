@@ -27,12 +27,14 @@ basically run these commands:
 
 Step 2: Include TheodoDrupal8Bundle
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-In your composer file, you'll need to require the ``TheodoDrupal8Bundle``. For that add the following lines to your ``composer.json``::
+In your composer file, you need to require the ``TheodoDrupal8Bundle``. For that add the following lines to your ``composer.json``::
 
 	"require": {
 	    # other packages... ,
         "theodo/drupal8-bundle": "dev-master"
 	}
+
+At the time of writing this, you will also need to change the value of ``"minimum-stability"`` from ``"stable"`` to ``"dev"`` in your ``composer.json`` to be compatible with the current stability of Drupal8.
 
 Then run ``composer update`` in your command shell to add all the necessary bundles to your project.
 
@@ -59,3 +61,10 @@ For Ubuntu, you will need to type the following commands to make the cache and l
 	APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
 	sudo setfacl -R -m u:$APACHEUSER:rwX -m u:`whoami`:rwX app/cache app/logs
 	sudo setfacl -dR -m u:$APACHEUSER:rwX -m u:`whoami`:rwX app/cache app/logs
+
+
+Step 4: Configure Drupal8 to work
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    //$vendorDir . '/kriswallsmith/assetic/src/functions.php',
+    //$baseDir . '/core/lib/Drupal.php',
