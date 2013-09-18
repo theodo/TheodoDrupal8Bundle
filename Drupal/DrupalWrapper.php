@@ -89,7 +89,11 @@ class DrupalWrapper implements DrupalWrapperInterface
         return !empty($this->response);
     }
 
-    private function bootDrupalKernel() {
+    /**
+     * @return DrupalKernel
+     */
+    private function bootDrupalKernel()
+    {
         $currentDir = getcwd();
         chdir($this->drupalDir);
 
@@ -109,7 +113,11 @@ class DrupalWrapper implements DrupalWrapperInterface
         return $drupalKernel;
     }
 
-    public function getDrupalKernel() {
+    /**
+     * @return DrupalKernel|string
+     */
+    public function getDrupalKernel()
+    {
         if (null === $this->drupalKernel) {
             $this->drupalKernel = $this->bootDrupalKernel();
         }
@@ -119,8 +127,11 @@ class DrupalWrapper implements DrupalWrapperInterface
 
     /**
      * Bootstraps the Drupal Kernel and tries to get the Response object
+     *
+     * @param Request $request
+     * @return Response
      */
-    public function handleRequest($request)
+    public function handle($request)
     {
         // handle possible exit() in Drupal code using a register shutdown function
         $this->catchExit = true;
@@ -139,7 +150,7 @@ class DrupalWrapper implements DrupalWrapperInterface
         $response = $response->prepare($request);
         $drupalKernel->terminate($request, $response);
 
-        // we can no exit() used in Drupal code
+        // if we are still here, there were no exit() used in Drupal code, we can unregister our shutdown_function
         $this->catchExit = false;
 
         // restore the symfony error handle
@@ -151,5 +162,45 @@ class DrupalWrapper implements DrupalWrapperInterface
         ob_end_clean();
 
         return $response;
+    }
+
+
+    /**
+     * @return Request
+     */
+    public function getRequest()
+    {
+
+        return $this->getDrupalKernel()->getContainer()->get('request');
+    }
+
+    /**
+     *
+     */
+    public function initAnonymousDrupalUser()
+    {
+        $drupalKernel = $this->getDrupalKernel();
+
+        $drupalUser = new \Drupal\Core\Session\UserSession();
+        $GLOBALS['user'] = $drupalUser;
+        $this->getRequest()->attributes->set('_account', $drupalUser);
+    }
+
+    /**
+     * @param $nodeId
+     * @return mixed
+     */
+    public function getNode($nodeId)
+    {
+        $drupalKernel = $this->getDrupalKernel();
+
+        $request = $this->getRequest();
+        $request->attributes->set('_system_path', 'node/'.$nodeId);
+        $this->initAnonymousDrupalUser();
+
+        $matcher = $drupalKernel->getContainer()->get('legacy_url_matcher');
+        $item = $matcher->matchRequest($request);
+
+        return $item[0];
     }
 }

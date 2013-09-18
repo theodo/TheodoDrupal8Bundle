@@ -18,7 +18,7 @@ interface DrupalWrapperInterface
      * @param $request
      * @return Response
      */
-    public function handleRequest($request);
+    public function handle($request);
 
     /**
      *

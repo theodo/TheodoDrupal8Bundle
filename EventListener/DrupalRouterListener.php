@@ -80,7 +80,7 @@ class DrupalRouterListener implements EventSubscriberInterface
                 $this->logger->info('Drupal will handle the request.');
             }
 
-            $drupalResponse = $this->drupalWrapper->handleRequest($event->getRequest());
+            $drupalResponse = $this->drupalWrapper->handle($event->getRequest());
             if ($drupalResponse->getStatusCode() !== 404) {
                 $event->setResponse($drupalResponse);
 
