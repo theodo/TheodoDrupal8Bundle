@@ -12,6 +12,7 @@
     <services>
         <service id="theodo_drupal8.drupal_wrapper" class="%theodo_drupal8.drupal_wrapper.class%">
             <argument type="string">%theodo_drupal8.drupal_dir%</argument>
+            <argument type="service" id="session"  on-invalid="ignore" />
         </service>
 
         <service id="theodo_drupal8.router_listener" class="%theodo_drupal8.router_listener.class%">
@@ -19,7 +20,7 @@
             <tag name="monolog.logger" channel="event" />
             <argument type="service" id="theodo_drupal8.drupal_wrapper" />
             <argument type="service" id="router_listener" />
-            <argument type="service" id="logger" on-invalid="null" />
+            <argument type="service" id="logger" on-invalid="ignore" />
         </service>
     </services>
 </container>

@@ -1,0 +1,14 @@
+{% extends "TheodoDrupal8Bundle::layout.html.twig" %}
+
+{% block title "Symfony Drupal8 Demo" %}
+
+{% block content_header '' %}
+
+{% block content %}
+    <h1 class="title">Drupal8 in Symfony2</h1>
+
+    <h2>Hello {{ user.name }}!</h2>
+
+    <div>{{  content|raw }}</div>
+
+{% endblock %}

@@ -25,7 +25,12 @@ class DrupalWrapper implements DrupalWrapperInterface
     private $drupalDir;
 
     /**
-     * The root path of the Drupal core files
+     * The Symfony2 session service
+     * @var string
+     */
+    private $session;
+
+    /**
      * @var string
      */
     private $drupalKernel;
@@ -34,7 +39,7 @@ class DrupalWrapper implements DrupalWrapperInterface
      * Indicates whether the Drupal core has exited cleanly
      * @var bool
      */
-    private $cleanDrupalExit = false;
+    private $catchExit = false;
 
 
     /**
@@ -46,9 +51,10 @@ class DrupalWrapper implements DrupalWrapperInterface
      * @param $drupalDir
      * @param ContainerInterface $serviceContainer
      */
-    public function __construct($drupalDir)
+    public function __construct($drupalDir, $session = null)
     {
         $this->drupalDir = $drupalDir;
+        $this->session   = $session;
     }
 
     /**
@@ -101,12 +107,15 @@ class DrupalWrapper implements DrupalWrapperInterface
 
         // Initialize the environment, load settings.php, and activate a PSR-0 class
         // autoloader with required namespaces registered.
-        drupal_bootstrap(DRUPAL_BOOTSTRAP_CONFIGURATION);
+        \drupal_bootstrap(DRUPAL_BOOTSTRAP_CONFIGURATION);
+
 
         $drupalKernel = new DrupalKernel('prod', drupal_classloader());
         $drupalKernel->boot();
 
-        drupal_bootstrap(DRUPAL_BOOTSTRAP_CODE);
+
+
+        \drupal_bootstrap(DRUPAL_BOOTSTRAP_CODE);
 
         chdir($currentDir);
 
@@ -179,11 +188,24 @@ class DrupalWrapper implements DrupalWrapperInterface
      */
     public function initAnonymousDrupalUser()
     {
-        $drupalKernel = $this->getDrupalKernel();
-
-        $drupalUser = new \Drupal\Core\Session\UserSession();
+        $drupalUser = drupal_anonymous_user();
         $GLOBALS['user'] = $drupalUser;
         $this->getRequest()->attributes->set('_account', $drupalUser);
+    }
+
+    /**
+     * @return Drupal\Core\Session\UserSession
+     */
+    public function getCurrentUser() {
+        require_once DRUPAL_ROOT . '/' . \settings()->get('session_inc', 'core/includes/session.inc');
+        $authentication = $this->getDrupalKernel()->getContainer()->get('authentication');
+
+        $drupalUser = $authentication->authenticate($this->getRequest());
+        $GLOBALS['user'] = $drupalUser;
+
+        $this->session->migrate();
+
+        return $drupalUser;
     }
 
     /**
@@ -196,7 +218,8 @@ class DrupalWrapper implements DrupalWrapperInterface
 
         $request = $this->getRequest();
         $request->attributes->set('_system_path', 'node/'.$nodeId);
-        $this->initAnonymousDrupalUser();
+
+        $this->getCurrentUser();
 
         $matcher = $drupalKernel->getContainer()->get('legacy_url_matcher');
         $item = $matcher->matchRequest($request);
