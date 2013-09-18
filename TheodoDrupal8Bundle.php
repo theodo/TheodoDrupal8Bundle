@@ -8,10 +8,5 @@ use Theodo\Bundle\Drupal8Bundle\DependencyInjection\Compiler\RouterListenerPass;
 
 class TheodoDrupal8Bundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
-    {
-        parent::build($container);
 
-        $container->addCompilerPass(new RouterListenerPass());
-    }
 }

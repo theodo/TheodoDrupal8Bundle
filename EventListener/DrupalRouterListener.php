@@ -10,25 +10,26 @@ use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Theodo\Bundle\Drupal8Bundle\Drupal\DrupalInterface;
+use Theodo\Bundle\Drupal8Bundle\Drupal\DrupalWrapperInterface;
 
 /**
  * Class DrupalRouterListener
  *
  * @author Thierry Marianne <thierrym@theodo.fr>
  * @author Kenny Durand <kennyd@theodo.fr>
+ * @author Fabrice Bernhard <fabriceb@theodo.fr>
  */
 class DrupalRouterListener implements EventSubscriberInterface
 {
     /**
-     * @var \Theodo\Bundle\Drupal8Bundle\Drupal\DrupalInterface
+     * @var \Theodo\Bundle\Drupal8Bundle\Drupal\DrupalWrapperInterface
      */
-    protected $drupal;
+    protected $drupalWrapper;
 
     /**
      * @var RouterListener
      */
-    protected $listener;
+    protected $routerListener;
 
     /**
      * @var \Symfony\Component\HttpKernel\Log\LoggerInterface
@@ -38,11 +39,29 @@ class DrupalRouterListener implements EventSubscriberInterface
     /**
      * @param DrupalInterface $drupal
      */
-    public function __construct(DrupalInterface $drupal, RouterListener $listener, LoggerInterface $logger = null)
+    public function __construct(DrupalWrapperInterface $drupalWrapper, RouterListener $routerListener, LoggerInterface $logger = null)
     {
-        $this->drupal = $drupal;
-        $this->delegate = $listener;
+        $this->drupalWrapper = $drupalWrapper;
+        $this->routerListener = $routerListener;
         $this->logger = $logger;
+    }
+
+    /**
+     * @param GetResponseEvent $event
+     *
+     * @return bool
+     *
+     */
+    public function isRequestMatchingSymfonyRoute($event)
+    {
+        try {
+            $this->routerListener->onKernelRequest($event);
+        } catch (NotFoundHttpException $e) {
+
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -56,28 +75,17 @@ class DrupalRouterListener implements EventSubscriberInterface
             return;
         }
 
-        try {
-            $this->delegate->onKernelRequest($event);
-        } catch (NotFoundHttpException $e) {
+        if (!$this->isRequestMatchingSymfonyRoute($event)) {
             if ($this->logger) {
                 $this->logger->info('Drupal will handle the request.');
             }
 
-            $this->drupal->initialize();
+            $drupalResponse = $this->drupalWrapper->handleRequest($event->getRequest());
+            if ($drupalResponse->getStatusCode() !== 404) {
+                $event->setResponse($drupalResponse);
 
-            if ($this->drupal->hasResponse()) {
-                $response = $this->drupal->getResponse();
-                if ($response->getStatusCode() !== 404) {
-                    $event->setResponse($response);
-
-                    return $event;
-                }
+                return $event;
             }
-
-            $request = $event->getRequest();
-            $message = sprintf('Neither Symfony nor Drupal were able to find a route for "%s %s"', $request->getMethod(), $request->getPathInfo());
-
-            throw new NotFoundHttpException($message, $e);
         }
     }
 
@@ -87,7 +95,7 @@ class DrupalRouterListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            KernelEvents::REQUEST => array('onKernelRequest', 31)
+            KernelEvents::REQUEST => array(array('onKernelRequest', 33)),
         );
     }
 }

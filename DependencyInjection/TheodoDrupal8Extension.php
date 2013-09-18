@@ -28,7 +28,7 @@ class TheodoDrupal8Extension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        $container->getDefinition('theodo_drupal8.drupal')
+        $container->getDefinition('theodo_drupal8.drupal_wrapper')
             ->replaceArgument(0, $config['drupal_dir'])
         ;
     }

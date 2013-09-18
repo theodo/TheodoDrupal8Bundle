@@ -66,5 +66,9 @@ For Ubuntu, you will need to type the following commands to make the cache and l
 Step 4: Configure Drupal8 to work
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Autoloading has two conflicts today which can be resolved with a hack for the moment.
+
+Comment the two following lines in the vendor/drupal/drupal/core/vendor/composer/autoload_files.php file:
+
     //$vendorDir . '/kriswallsmith/assetic/src/functions.php',
     //$baseDir . '/core/lib/Drupal.php',
