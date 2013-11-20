@@ -19,10 +19,9 @@ First of all, you need a working Symfony2 project.
 The easiest way is to follow the official documentation:
 https://github.com/symfony/symfony-standard
 
-basically run these commands:
+basically run these commands: ::
 
     curl -s http://getcomposer.org/installer | php
-
     php composer.phar create-project symfony/framework-standard-edition path/to/install
 
 Step 2: Include TheodoDrupal8Bundle
@@ -41,7 +40,7 @@ Then run ``composer update`` in your command shell to add all the necessary bund
 You will also need to add the declaration in your
 ``AppKernel.php`` file, like this::
 
-	public function registerBundles()
+    public function registerBundles()
     {
         $bundles = array(
             # other bundles... ,
@@ -56,7 +55,7 @@ Step 3: Configure Symfony2 to work
 
 Check http://symfony.com/doc/current/book/installation.html for the last steps of Symfony2's installation.
 
-For Ubuntu, you will need to type the following commands to make the cache and logs directories writable:
+For Ubuntu, you will need to type the following commands to make the cache and logs directories writable: ::
 
 	APACHEUSER=`ps aux | grep -E '[a]pache|[h]ttpd' | grep -v root | head -1 | cut -d\  -f1`
 	sudo setfacl -R -m u:$APACHEUSER:rwX -m u:`whoami`:rwX app/cache app/logs
@@ -68,7 +67,7 @@ Step 4: Configure Drupal8 to work
 
 Autoloading has two conflicts today which can be resolved with a hack for the moment.
 
-Comment the two following lines in the vendor/drupal/drupal/core/vendor/composer/autoload_files.php file:
+Comment the two following lines in the vendor/drupal/drupal/core/vendor/composer/autoload_files.php file: ::
 
-    //$vendorDir . '/kriswallsmith/assetic/src/functions.php',
-    //$baseDir . '/core/lib/Drupal.php',
+    $vendorDir . '/kriswallsmith/assetic/src/functions.php',
+    $baseDir . '/core/lib/Drupal.php',
