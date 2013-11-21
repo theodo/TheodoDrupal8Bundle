@@ -216,14 +216,25 @@ class DrupalWrapper implements DrupalWrapperInterface
     {
         $drupalKernel = $this->getDrupalKernel();
 
+        $entityConverter = $drupalKernel->getContainer()
+            ->get('paramconverter_manager')
+            ->getConverter('paramconverter.entity');
+        $node = $entityConverter->convert(1, array('type' => 'entity:node', ''));
+
+        return $node;
+    }
+
+    /**
+     * @param $title string
+     * @return mixed
+     */
+    public function getNodeByTitle($title)
+    {
         $request = $this->getRequest();
-        $request->attributes->set('_system_path', 'node/'.$nodeId);
+        $request->attributes->set('_system_path', 'node/'.$title);
 
         $this->getCurrentUser();
 
-        $matcher = $drupalKernel->getContainer()->get('legacy_url_matcher');
-        $item = $matcher->matchRequest($request);
-
-        return $item[0];
+        return entity_load_multiple_by_properties('node', array('title' => 'Salut monde'))[1];
     }
 }
